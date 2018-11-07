@@ -1,0 +1,216 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: ava-storm
+  namespace: ava-prd
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: node-owner.qiniu.com/atlab
+            operator: In
+            values:
+            - "true"
+  tolerations:
+  - effect: NoSchedule
+    key: node.kubernetes.io/memory-pressure
+    operator: Exists
+  - effect: NoSchedule
+    key: qiniu.com/owner
+    operator: Equal
+    value: atlab
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  - key: qiniu.com/owner
+    operator: Equal
+    value: atlab
+  hostNetwork: true
+  dnsPolicy: ClusterFirstWithHostNet
+  containers:
+    - name: ava-storm
+      image: ubuntu:16.04
+      command:
+      - sleep
+      - infinity
+      resources:
+        requests:
+          cpu: 0.1
+          memory: 512Mi
+        limits:
+          cpu: 1
+          memory: 2Gi
+      volumeMounts:
+      - mountPath: /workspace/group-alg-pro
+        name: alg-pro
+      - mountPath: /workspace/group-alg-retri
+        name: alg-retri
+      - mountPath: /workspace/group-algo-sdk
+        name: algo-sdk
+      - mountPath: /workspace/group-ava1
+        name: ava1
+      - mountPath: /workspace/group-avagroup
+        name: avagroup
+      - mountPath: /workspace/group-blademaster
+        name: blademaster
+      - mountPath: /workspace/group-classify-detection
+        name: classify-detection
+      - mountPath: /workspace/group-customization
+        name: customization
+      - mountPath: /workspace/group-deliver
+        name: deliver
+      - mountPath: /workspace/group-ecnu-students
+        name: ecnu-students
+      - mountPath: /workspace/group-face
+        name: face
+      - mountPath: /workspace/group-face-det
+        name: face-det
+      - mountPath: /workspace/group-face-reg
+        name: face-reg
+      - mountPath: /workspace/group-fd-students
+        name: fd-students
+      - mountPath: /workspace/group-fudan-medialab
+        name: fudan-medialab
+      - mountPath: /workspace/group-general-reg
+        name: general-reg
+      - mountPath: /workspace/group-lego
+        name: lego
+      - mountPath: /workspace/group-markting
+        name: markting
+      - mountPath: /workspace/group-njust-math-pde-lab
+        name: njust-math-pde-lab
+      - mountPath: /workspace/group-ocr
+        name: ocr
+      - mountPath: /workspace/group-ocr-fd-group
+        name: ocr-fd-group
+      - mountPath: /workspace/group-other
+        name: other
+      - mountPath: /workspace/group-sds-grp
+        name: sds-grp
+      - mountPath: /workspace/group-terror
+        name: terror
+      - mountPath: /workspace/group-test1
+        name: test1
+      - mountPath: /workspace/group-tongji-essc
+        name: tongji-essc
+      - mountPath: /workspace/group-uestc-medi-health
+        name: uestc-medi-health
+      - mountPath: /workspace/group-usst-iclab
+        name: usst-iclab
+      - mountPath: /workspace/group-video
+        name: video
+      - mountPath: /workspace/group-video-det
+        name: video-det
+      - mountPath: /workspace/group-video1
+        name: video1
+      - mountPath: /workspace/group-xidian-etvp
+        name: xidian-etvp
+      - mountPath: /workspace/group-zhaojfifa
+        name: zhaojfifa
+  volumes:
+    - name: alg-pro
+      persistentVolumeClaim:
+        claimName: group-alg-pro
+    - name: alg-retri
+      persistentVolumeClaim:
+        claimName: group-alg-retri
+    - name: algo-sdk
+      persistentVolumeClaim:
+        claimName: group-algo-sdk
+    - name: ava1
+      persistentVolumeClaim:
+        claimName: group-ava1
+    - name: avagroup
+      persistentVolumeClaim:
+        claimName: group-avagroup
+    - name: blademaster
+      persistentVolumeClaim:
+        claimName: group-blademaster
+    - name: classify-detection
+      persistentVolumeClaim:
+        claimName: group-classify-detection
+    - name: customization
+      persistentVolumeClaim:
+        claimName: group-customization
+    - name: deliver
+      persistentVolumeClaim:
+        claimName: group-deliver
+    - name: ecnu-students
+      persistentVolumeClaim:
+        claimName: group-ecnu-students
+    - name: face
+      persistentVolumeClaim:
+        claimName: group-face
+    - name: face-det
+      persistentVolumeClaim:
+        claimName: group-face-det
+    - name: face-reg
+      persistentVolumeClaim:
+        claimName: group-face-reg
+    - name: fd-students
+      persistentVolumeClaim:
+        claimName: group-fd-students
+    - name: fudan-medialab
+      persistentVolumeClaim:
+        claimName: group-fudan-medialab
+    - name: general-reg
+      persistentVolumeClaim:
+        claimName: group-general-reg
+    - name: lego
+      persistentVolumeClaim:
+        claimName: group-lego
+    - name: markting
+      persistentVolumeClaim:
+        claimName: group-markting
+    - name: njust-math-pde-lab
+      persistentVolumeClaim:
+        claimName: group-njust-math-pde-lab
+    - name: ocr
+      persistentVolumeClaim:
+        claimName: group-ocr
+    - name: ocr-fd-group
+      persistentVolumeClaim:
+        claimName: group-ocr-fd-group
+    - name: other
+      persistentVolumeClaim:
+        claimName: group-other
+    - name: sds-grp
+      persistentVolumeClaim:
+        claimName: group-sds-grp
+    - name: terror
+      persistentVolumeClaim:
+        claimName: group-terror
+    - name: test1
+      persistentVolumeClaim:
+        claimName: group-test1
+    - name: tongji-essc
+      persistentVolumeClaim:
+        claimName: group-tongji-essc
+    - name: uestc-medi-health
+      persistentVolumeClaim:
+        claimName: group-uestc-medi-health
+    - name: usst-iclab
+      persistentVolumeClaim:
+        claimName: group-usst-iclab
+    - name: video
+      persistentVolumeClaim:
+        claimName: group-video
+    - name: video-det
+      persistentVolumeClaim:
+        claimName: group-video-det
+    - name: video1
+      persistentVolumeClaim:
+        claimName: group-video1
+    - name: xidian-etvp
+      persistentVolumeClaim:
+        claimName: group-xidian-etvp
+    - name: zhaojfifa
+      persistentVolumeClaim:
+        claimName: group-zhaojfifa
